@@ -91,3 +91,11 @@ http://jkiie.snu.ac.kr/index.php/journal/article/view/539/pdf
 ****
 
 ![image-20200113220717653](%EC%A0%9C%EC%A1%B0%20IT/image-20200113220717653.png)
+
+## 빅데이터 활용 스마트 팩토리
+
+[기사](http://www.fajournal.com/news/articleView.html?idxno=6894)
+
+## 제조현장 데이터 수집 방법
+
+[블로그](https://m.blog.naver.com/PostView.nhn?blogId=suresofttech&logNo=221713031503&categoryNo=112&proxyReferer=https%3A%2F%2Fwww.google.com%2F)
