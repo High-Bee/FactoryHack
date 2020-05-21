@@ -1,15 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # 모델 검증을 위한 k-fold cross validation 실시
-
-# In[ ]:
-
-
+## 모델 검증을 위한 k-fold cross validation 실시
 # 분석용 데이터는 A1문제의 전처리 과정을 똑같이 거침
-
-
-# In[ ]:
 
 
 from sklearn.model_selection import cross_val_score, KFold, StratifiedShuffleSplit

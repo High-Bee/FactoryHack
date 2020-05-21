@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
-
 # # working status에 따른 분석 의미 확인
 # ## Multinomial classification을 활용한 working status에 따른 featurer값 의미 분석
-
-# In[5]:
 
 
 ## 필요 module load
@@ -16,8 +13,6 @@ from sklearn.preprocessing import MinMaxScaler
 import datetime
 
 
-# In[6]:
-
 
 ## data load
 a_train_origin = pd.read_csv("C:/Users/BEE K/Desktop/dataset/A_train.csv")
@@ -25,8 +20,6 @@ a_test_origin = pd.read_csv("C:/Users/BEE K/Desktop/dataset/A_test.csv")
 a_train_set = a_train_origin.copy()
 a_test_set =  a_test_origin.copy()
 
-
-# In[ ]:
 
 
 ## 42개 null값 처리 후 필요 set 추출
@@ -39,9 +32,6 @@ y_train_data = a_train_1["op_result"]
 x_train_data = a_train_1.iloc[:,24:47]
 
 
-# In[ ]:
-
-
 ## train data set 전처리 (공장 가동중에 대한 데이터 추출)
 sp_df = a_train_set[((a_train_set["op_start"]==1) | (a_train_set["op_end"]==1)) ==True]
 sp_df
@@ -49,15 +39,11 @@ sp_x_df = sp_df.iloc[:,24:47]
 sp_y_df = sp_df.loc[:,["op_start","op_end","op_result"]]
 
 
-# In[ ]:
 
 
 ## predict용 test data set 전처리
 pp_df = a_test_set[((a_test_set["op_start"]==1) | (a_test_set["op_end"]==1)) ==True]
 pp_x_df=pp_df.loc[:,["seq","d15","d16","d17","d18","d19","d20","d21","d22","d23","d24","d25","d26","d27","d28","d29","d30","d31","d32","d33","d34","d35","d36","d37"]]
-
-
-# In[ ]:
 
 
 ## train data 정규화 및 train set / test set 분할
@@ -74,8 +60,6 @@ y_test = sp_y_df["op_result"][train_num:].values.reshape([-1,1])
 y_train.shape
 x_pre = scaler.fit_transform(pp_x_df.values)
 
-
-# In[ ]:
 
 
 # 가동 상태 분류
@@ -101,7 +85,6 @@ y_train = y_train_data[:train_num].values
 y_test = y_train_data[train_num:].values
 
 
-# In[ ]:
 
 
 # Model 정의
@@ -139,17 +122,12 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 
-# In[1]:
 
 
 get_ipython().run_cell_magic('time', '', 'train_epoch = 50\nbatch_size = 100\nfor step in range(train_epoch):\n    num_of_iter = int(x_train.shape[0]/batch_size)\n    cost_val = 0\n    for i in range(num_of_iter):\n        start = i * batch_size\n        end = start + batch_size\n        cut_train_x = x_train[start:end]\n        cut_train_y = y_train[start:end]\n        _, cost_val = sess.run([train, cost], \n                               feed_dict={ X : cut_train_x,\n                                            Y : cut_train_y})\n        \n    if step % 5 == 0:\n        print("Cost값 : {}".format(cost_val))\n      \n#정확도 측정\npredict = tf.argmax(H, 1)\ncorrect = tf.equal(predict, tf.argmax(Y, 1))\naccuracy = tf.reduce_mean(tf.cast(correct, dtype = tf.float32))\nprint("정확도는 : {}".format(sess.run(accuracy, feed_dict={X : x_test,\n                                                          Y : y_test})))\n\n# Cost값 : 0.6810373663902283\n# Cost값 : 0.31244540214538574\n# Cost값 : 0.3094421923160553\n# Cost값 : 0.3077668845653534\n# Cost값 : 0.3077707588672638\n# Cost값 : 0.30777063965797424\n# Cost값 : 0.3077707290649414\n# Cost값 : 0.3077709674835205\n# Cost값 : 0.30777060985565186\n# Cost값 : 0.30777081847190857\n# 정확도는 : 0.5890411734580994\n# Wall time: 6min 53s')
 
 
-# # 양품 / 불량품 분리하여 Logistic regression
-
-# In[ ]:
-
-
+## 양품 / 불량품 분리하여 Logistic regression Code
 ## 양품 / 불량품에 대한 그룹핑 (가동 중 result값을 불량품일때 0으로 처리 / 양품일때 1로 처리)
 a_train_set.iloc[:,24:47].sum()
 n = 0
@@ -166,8 +144,6 @@ for i in range(int(len(sp_y_df))):
 print(sp_y_df)    
 
 
-# In[ ]:
-
 
 ## train data 정규화 및 train set / test set 분할
 
@@ -183,8 +159,6 @@ y_test = sp_y_df["op_result"][train_num:].values.reshape([-1,1])
 y_train.shape
 x_pre = scaler.fit_transform(pp_x_df.values)
 
-
-# In[ ]:
 
 
 # placeholer / reset
@@ -222,7 +196,6 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 
-# In[ ]:
 
 
 for step in range(3000):
@@ -250,8 +223,6 @@ print("정확도 : {}".format(sess.run(accuracy, feed_dict={X: x_test,
 # Cost 값은 : 0.01954224891960621
 # 정확도 : 0.9903903603553772
 
-
-# In[ ]:
 
 
 predict = tf.cast(H > 0.5, dtype=tf.float32)
