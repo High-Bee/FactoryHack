@@ -28,13 +28,13 @@ A-2 문제에서 제시한 방법에 따른 모델 성능 감소를 해소할 �
 
 
 
-## 3. 해결방안
+## 3. 해결방안s
 
 #### 1. Data preprocessing
 
-<img src="README.assets/image-20200521181842337.png" alt="image-20200521181842337" style="zoom: 50%;" />![image-20200521181921408](README.assets/image-20200521181921408.png)
+<img src="README.assets/image-20200521181842337.png" alt="image-20200521181842337" style="zoom: 50%;" />
 
-​																						↓
+​																						↓↓↓↓↓↓
 
 <img src="README.assets/image-20200521182018224.png" alt="image-20200521182018224" style="zoom:50%;" />
 
